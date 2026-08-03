@@ -1,11 +1,25 @@
-# Project Artifacts
-.DS_Store
-*.log
+# Node
 node_modules/
 
-# Docker
-.docker/
+# Lock files
+package-lock.json
+
+# Vite
+dist/
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
 
 # IDE
 .vscode/
 .idea/
+
+# Docker
+.docker/
