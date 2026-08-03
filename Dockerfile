@@ -1,19 +1,26 @@
-# Use the official Nginx alpine image as the base
-FROM nginx:alpine
+# Multi-stage Dockerfile for production
+# Build stage
+FROM node:18-alpine AS build
+WORKDIR /app
 
-# Remove the default nginx configuration file
-RUN rm /etc/nginx/conf.d/default.conf
+# Install dependencies (use package-lock for reproducible builds)
+COPY package.json package-lock.json ./
+RUN npm ci --silent
 
-# Copy our custom nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/
+# Copy source and build
+COPY . .
+RUN npm run build
 
-# Copy the website files into the nginx html directory
-COPY index.html /usr/share/nginx/html/
-COPY style.css /usr/share/nginx/html/
-COPY script.js /usr/share/nginx/html/
+# Production stage: serve with nginx
+FROM nginx:stable-alpine AS production
+LABEL maintainer="Katkojwal Krishna <you@example.com>"
 
-# Expose port 80 to the outside world
+# Replace default nginx config
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy built assets from build stage
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose port
 EXPOSE 80
-
-# The default command is to start nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]

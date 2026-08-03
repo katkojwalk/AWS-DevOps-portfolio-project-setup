@@ -1,0 +1,14 @@
+# Development Dockerfile for running Vite dev server inside container
+FROM node:18-alpine
+WORKDIR /app
+
+# Install dependencies
+COPY package.json package-lock.json ./
+RUN npm ci --silent
+
+# Copy source
+COPY . .
+
+# Expose Vite dev server port and run with host 0.0.0.0 for container access
+EXPOSE 5173
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

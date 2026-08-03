@@ -1,0 +1,10 @@
+node_modules
+dist
+.docker
+.git
+.env
+.env.local
+npm-debug.log
+.vscode
+coverage
+src/**/*.test.*
