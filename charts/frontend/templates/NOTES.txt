@@ -1,0 +1,11 @@
+Thank you for installing the frontend chart.
+
+To access your application:
+  1. If ingress is enabled and an ALB controller is installed, retrieve the ALB DNS from:
+     kubectl get ingress -n {{ .Release.Namespace }}
+
+  2. Or forward port locally:
+     kubectl port-forward svc/{{ include "frontend.fullname" . }} 8080:{{ .Values.service.port }} -n {{ .Release.Namespace }}
+
+To uninstall:
+  helm uninstall {{ .Release.Name }} -n {{ .Release.Namespace }}

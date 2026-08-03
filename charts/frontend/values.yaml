@@ -1,0 +1,48 @@
+replicaCount: 2
+
+image:
+  repository: ghcr.io/katkojwalk/aws-devops-portfolio-project-setup
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+  requests:
+    cpu: "250m"
+    memory: "128Mi"
+
+ingress:
+  enabled: true
+  host: example.com
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+
+readinessProbe:
+  path: /
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 3
+
+livenessProbe:
+  path: /
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  timeoutSeconds: 3
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 60
+
+serviceAccount:
+  create: true
+  name: ""

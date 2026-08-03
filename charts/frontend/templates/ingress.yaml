@@ -1,0 +1,24 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "frontend.fullname" . }}-ingress
+  annotations:
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+  labels:
+    app.kubernetes.io/name: {{ include "frontend.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  ingressClassName: {{ default "alb" (index .Values.ingress.annotations "kubernetes.io/ingress.class") }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "frontend.fullname" . }}
+                port:
+                  number: {{ .Values.service.port }}
+{{- end }}
