@@ -1,0 +1,15 @@
+region = "us-east-1"
+env = "dev"
+prefix = "devops-portfolio"
+vpc_cidr = "10.0.0.0/16"
+public_subnets = ["10.0.1.0/24","10.0.2.0/24"]
+private_subnets = ["10.0.101.0/24","10.0.102.0/24"]
+service_desired_count = 2
+container_image = "123456789012.dkr.ecr.us-east-1.amazonaws.com/your-repo:latest"
+
+# For the EKS module
+cluster_name = "devops-portfolio-eks"
+node_group_instance_types = ["t3.medium"]
+desired_capacity = 2
+min_size = 1
+max_size = 3
