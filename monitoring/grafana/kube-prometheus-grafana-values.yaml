@@ -1,0 +1,9 @@
+grafana:
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+
+# Optional: allow provisioning from ConfigMaps in the monitoring namespace
+  ingress:
+    enabled: false
