@@ -1,0 +1,22 @@
+# Minimal opinionated values for kube-prometheus-stack
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    retention: 15d
+    evaluationInterval: "30s"
+
+grafana:
+  enabled: true
+  grafana.ini:
+    server:
+      root_url: %(protocol)s://%(domain)s
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+# Keep default storage small for demo; for prod use persistent volumes
+prometheus-node-exporter:
+  enabled: true
