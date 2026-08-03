@@ -1,0 +1,11 @@
+# Project Artifacts
+.DS_Store
+*.log
+node_modules/
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
